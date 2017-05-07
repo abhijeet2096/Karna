@@ -267,6 +267,8 @@ fstream
 -
 opencv/cv.h
 -
+Eigen/Core
+-
 opencv/highgui.h
 -
 

@@ -143,17 +143,17 @@ void Tracker::Initialise(const cv::Mat& frame, FloatRect bb)
 {
 	m_bb = IntRect(bb);
 	ImageRep image(frame, m_needsIntegralImage, m_needsIntegralHist);
-	for (int i = 0; i < 100; ++i)
+	for (int i = 0; i < 1; ++i)
 	{
 		UpdateLearner(image);
 	}
 	m_initialised = true;
 }
 
-void Tracker::Track(const cv::Mat& frame)
+void Tracker::Track(const cv::Mat& frame, const Point& screenDimension, const Point& boxDimension)
 {
 	assert(m_initialised);
-	static Point lTrue, last;
+	static Point p, dp;
 	static int counter;
 
 	ImageRep image(frame, m_needsIntegralImage, m_needsIntegralHist);
@@ -185,21 +185,23 @@ void Tracker::Track(const cv::Mat& frame)
 	}
 
 	if(bestScore >0.2){
-		lTrue.x = keptRects[bestInd].XMin() - last.x;
-		lTrue.y = keptRects[bestInd].YMin() - last.y;
+		dp.x = keptRects[bestInd].XMin() - p.x;
+		dp.y = keptRects[bestInd].YMin() - p.y;
 
-		last.x = keptRects[bestInd].XMin();
-		last.y = keptRects[bestInd].YMin();
+		p.x = keptRects[bestInd].XMin();
+		p.y = keptRects[bestInd].YMin();
 
 		counter = 0;
 
-		m_bb = keptRects[bestInd];
 	}
 	else{
-		if(last.x + (2 * counter * lTrue.x) >= 0 && last.x + (2 * counter * lTrue.x) < 700 && last.y + (2 * counter * lTrue.y) >= 0 && last.y + (2 * counter * lTrue.y) <500){
-			FloatRect tmp(last.x + (2 * counter * lTrue.x), last.y + (2 * counter * lTrue.y), 100, 100);
-			m_bb = tmp;
-			counter++;
+
+		
+		if(p.x + (2 * (counter + 1) * dp.x) > 0 && 
+			p.x + (2 * (counter + 1) * dp.x) < screenDimension.x - boxDimension.x && 
+			p.y + (2 * (counter + 1) * dp.y) > 0 && 
+			p.y + (2 * (counter + 1) * dp.y) < screenDimension.y - boxDimension.y){
+			counter++;	
 		}
 
 		cout<<"OBJECT LOST!"<<endl;
@@ -207,6 +209,13 @@ void Tracker::Track(const cv::Mat& frame)
 	
 	UpdateDebugImage(keptRects, m_bb, scores);
 	
+	if(bestScore > 0.2)
+		m_bb = keptRects[bestInd];
+	else{
+		FloatRect tmp(p.x + (2 * counter * dp.x), p.y + (2 * counter * dp.y), boxDimension.x, boxDimension.y);
+		m_bb = tmp;
+	}
+
 	if (bestScore > 0.6)
 	{ 
 		

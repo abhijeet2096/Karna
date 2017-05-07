@@ -34,6 +34,8 @@
 #include <Eigen/Core>
 #include <opencv/cv.h>
 
+using namespace cv;
+
 class Config;
 class Features;
 class Kernel;
@@ -48,7 +50,7 @@ public:
 	
 	void Initialise(const cv::Mat& frame, FloatRect bb);
 	void Reset();
-	void Track(const cv::Mat& frame);
+	void Track(const cv::Mat& frame, const Point& screenDimension, const Point& boxDimension);
 	void Debug();
 	
 	inline const FloatRect& GetBB() const { return m_bb; }
