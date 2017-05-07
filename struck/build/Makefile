@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/indresh/struck/struck
+CMAKE_SOURCE_DIR = /home/indresh/Karna/struck
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/indresh/struck/struck/build
+CMAKE_BINARY_DIR = /home/indresh/Karna/struck/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/indresh/struck/struck/build/CMakeFiles /home/indresh/struck/struck/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/indresh/Karna/struck/build/CMakeFiles /home/indresh/Karna/struck/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/indresh/struck/struck/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/indresh/Karna/struck/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

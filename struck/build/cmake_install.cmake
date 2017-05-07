@@ -1,4 +1,4 @@
-# Install script for directory: /home/indresh/struck/struck
+# Install script for directory: /home/indresh/Karna/struck
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/indresh/struck/struck/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/indresh/Karna/struck/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -6,9 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/indresh/struck/struck/src/Config.cpp
+/home/indresh/Karna/struck/src/Config.cpp
 Config.h
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 fstream
 -
 iostream
@@ -16,7 +16,7 @@ iostream
 sstream
 -
 
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 vector
 -
 string
@@ -24,19 +24,19 @@ string
 ostream
 -
 
-/home/indresh/struck/struck/src/Features.cpp
+/home/indresh/Karna/struck/src/Features.cpp
 Features.h
-/home/indresh/struck/struck/src/Features.h
+/home/indresh/Karna/struck/src/Features.h
 
-/home/indresh/struck/struck/src/Features.h
+/home/indresh/Karna/struck/src/Features.h
 Sample.h
-/home/indresh/struck/struck/src/Sample.h
+/home/indresh/Karna/struck/src/Sample.h
 Eigen/Core
 -
 vector
 -
 
-/home/indresh/struck/struck/src/GraphUtils/GraphUtils.cpp
+/home/indresh/Karna/struck/src/GraphUtils/GraphUtils.cpp
 stdio.h
 -
 opencv/cv.h
@@ -46,71 +46,71 @@ opencv/cxcore.h
 opencv/highgui.h
 -
 GraphUtils.h
-/home/indresh/struck/struck/src/GraphUtils/GraphUtils.h
+/home/indresh/Karna/struck/src/GraphUtils/GraphUtils.h
 iostream
 -
 
-/home/indresh/struck/struck/src/GraphUtils/GraphUtils.h
+/home/indresh/Karna/struck/src/GraphUtils/GraphUtils.h
 
-/home/indresh/struck/struck/src/HaarFeature.cpp
+/home/indresh/Karna/struck/src/HaarFeature.cpp
 HaarFeature.h
-/home/indresh/struck/struck/src/HaarFeature.h
+/home/indresh/Karna/struck/src/HaarFeature.h
 Sample.h
-/home/indresh/struck/struck/src/Sample.h
+/home/indresh/Karna/struck/src/Sample.h
 cassert
 -
 iostream
 -
 
-/home/indresh/struck/struck/src/HaarFeature.h
+/home/indresh/Karna/struck/src/HaarFeature.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 ImageRep.h
-/home/indresh/struck/struck/src/ImageRep.h
+/home/indresh/Karna/struck/src/ImageRep.h
 vector
 -
 
-/home/indresh/struck/struck/src/HaarFeatures.cpp
+/home/indresh/Karna/struck/src/HaarFeatures.cpp
 HaarFeatures.h
-/home/indresh/struck/struck/src/HaarFeatures.h
+/home/indresh/Karna/struck/src/HaarFeatures.h
 Config.h
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 
-/home/indresh/struck/struck/src/HaarFeatures.h
+/home/indresh/Karna/struck/src/HaarFeatures.h
 Features.h
-/home/indresh/struck/struck/src/Features.h
+/home/indresh/Karna/struck/src/Features.h
 HaarFeature.h
-/home/indresh/struck/struck/src/HaarFeature.h
+/home/indresh/Karna/struck/src/HaarFeature.h
 vector
 -
 
-/home/indresh/struck/struck/src/HistogramFeatures.cpp
+/home/indresh/Karna/struck/src/HistogramFeatures.cpp
 HistogramFeatures.h
-/home/indresh/struck/struck/src/HistogramFeatures.h
+/home/indresh/Karna/struck/src/HistogramFeatures.h
 Config.h
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 Sample.h
-/home/indresh/struck/struck/src/Sample.h
+/home/indresh/Karna/struck/src/Sample.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 iostream
 -
 
-/home/indresh/struck/struck/src/HistogramFeatures.h
+/home/indresh/Karna/struck/src/HistogramFeatures.h
 Features.h
-/home/indresh/struck/struck/src/Features.h
+/home/indresh/Karna/struck/src/Features.h
 
-/home/indresh/struck/struck/src/ImageRep.cpp
+/home/indresh/Karna/struck/src/ImageRep.cpp
 ImageRep.h
-/home/indresh/struck/struck/src/ImageRep.h
+/home/indresh/Karna/struck/src/ImageRep.h
 cassert
 -
 opencv/highgui.h
 -
 
-/home/indresh/struck/struck/src/ImageRep.h
+/home/indresh/Karna/struck/src/ImageRep.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 opencv/cv.h
 -
 vector
@@ -118,35 +118,35 @@ vector
 Eigen/Core
 -
 
-/home/indresh/struck/struck/src/Kernels.h
+/home/indresh/Karna/struck/src/Kernels.h
 Eigen/Core
 -
 cmath
 -
 
-/home/indresh/struck/struck/src/LaRank.cpp
+/home/indresh/Karna/struck/src/LaRank.cpp
 LaRank.h
-/home/indresh/struck/struck/src/LaRank.h
+/home/indresh/Karna/struck/src/LaRank.h
 Config.h
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 Features.h
-/home/indresh/struck/struck/src/Features.h
+/home/indresh/Karna/struck/src/Features.h
 Kernels.h
-/home/indresh/struck/struck/src/Kernels.h
+/home/indresh/Karna/struck/src/Kernels.h
 Sample.h
-/home/indresh/struck/struck/src/Sample.h
+/home/indresh/Karna/struck/src/Sample.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 GraphUtils/GraphUtils.h
-/home/indresh/struck/struck/src/GraphUtils/GraphUtils.h
+/home/indresh/Karna/struck/src/GraphUtils/GraphUtils.h
 opencv/highgui.h
 -
 
-/home/indresh/struck/struck/src/LaRank.h
+/home/indresh/Karna/struck/src/LaRank.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 Sample.h
-/home/indresh/struck/struck/src/Sample.h
+/home/indresh/Karna/struck/src/Sample.h
 vector
 -
 Eigen/Core
@@ -154,87 +154,87 @@ Eigen/Core
 opencv/cv.h
 -
 
-/home/indresh/struck/struck/src/MultiFeatures.cpp
+/home/indresh/Karna/struck/src/MultiFeatures.cpp
 MultiFeatures.h
-/home/indresh/struck/struck/src/MultiFeatures.h
+/home/indresh/Karna/struck/src/MultiFeatures.h
 
-/home/indresh/struck/struck/src/MultiFeatures.h
+/home/indresh/Karna/struck/src/MultiFeatures.h
 Features.h
-/home/indresh/struck/struck/src/Features.h
+/home/indresh/Karna/struck/src/Features.h
 vector
 -
 
-/home/indresh/struck/struck/src/RawFeatures.cpp
+/home/indresh/Karna/struck/src/RawFeatures.cpp
 RawFeatures.h
-/home/indresh/struck/struck/src/RawFeatures.h
+/home/indresh/Karna/struck/src/RawFeatures.h
 Config.h
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 Sample.h
-/home/indresh/struck/struck/src/Sample.h
+/home/indresh/Karna/struck/src/Sample.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 iostream
 -
 
-/home/indresh/struck/struck/src/RawFeatures.h
+/home/indresh/Karna/struck/src/RawFeatures.h
 Features.h
-/home/indresh/struck/struck/src/Features.h
+/home/indresh/Karna/struck/src/Features.h
 opencv/cv.h
 -
 
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 iostream
 -
 algorithm
 -
 
-/home/indresh/struck/struck/src/Sample.h
+/home/indresh/Karna/struck/src/Sample.h
 ImageRep.h
-/home/indresh/struck/struck/src/ImageRep.h
+/home/indresh/Karna/struck/src/ImageRep.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 vector
 -
 
-/home/indresh/struck/struck/src/Sampler.cpp
+/home/indresh/Karna/struck/src/Sampler.cpp
 Sampler.h
-/home/indresh/struck/struck/src/Sampler.h
+/home/indresh/Karna/struck/src/Sampler.h
 Config.h
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 cmath
 -
 
-/home/indresh/struck/struck/src/Sampler.h
+/home/indresh/Karna/struck/src/Sampler.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 vector
 -
 
-/home/indresh/struck/struck/src/Tracker.cpp
+/home/indresh/Karna/struck/src/Tracker.cpp
 Tracker.h
-/home/indresh/struck/struck/src/Tracker.h
+/home/indresh/Karna/struck/src/Tracker.h
 Config.h
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 ImageRep.h
-/home/indresh/struck/struck/src/ImageRep.h
+/home/indresh/Karna/struck/src/ImageRep.h
 Sampler.h
-/home/indresh/struck/struck/src/Sampler.h
+/home/indresh/Karna/struck/src/Sampler.h
 Sample.h
-/home/indresh/struck/struck/src/Sample.h
+/home/indresh/Karna/struck/src/Sample.h
 GraphUtils/GraphUtils.h
-/home/indresh/struck/struck/src/GraphUtils/GraphUtils.h
+/home/indresh/Karna/struck/src/GraphUtils/GraphUtils.h
 HaarFeatures.h
-/home/indresh/struck/struck/src/HaarFeatures.h
+/home/indresh/Karna/struck/src/HaarFeatures.h
 RawFeatures.h
-/home/indresh/struck/struck/src/RawFeatures.h
+/home/indresh/Karna/struck/src/RawFeatures.h
 HistogramFeatures.h
-/home/indresh/struck/struck/src/HistogramFeatures.h
+/home/indresh/Karna/struck/src/HistogramFeatures.h
 MultiFeatures.h
-/home/indresh/struck/struck/src/MultiFeatures.h
+/home/indresh/Karna/struck/src/MultiFeatures.h
 Kernels.h
-/home/indresh/struck/struck/src/Kernels.h
+/home/indresh/Karna/struck/src/Kernels.h
 LaRank.h
-/home/indresh/struck/struck/src/LaRank.h
+/home/indresh/Karna/struck/src/LaRank.h
 opencv/cv.h
 -
 opencv/highgui.h
@@ -246,9 +246,9 @@ vector
 algorithm
 -
 
-/home/indresh/struck/struck/src/Tracker.h
+/home/indresh/Karna/struck/src/Tracker.h
 Rect.h
-/home/indresh/struck/struck/src/Rect.h
+/home/indresh/Karna/struck/src/Rect.h
 vector
 -
 Eigen/Core
@@ -256,11 +256,11 @@ Eigen/Core
 opencv/cv.h
 -
 
-/home/indresh/struck/struck/src/main.cpp
+/home/indresh/Karna/struck/src/main.cpp
 Tracker.h
-/home/indresh/struck/struck/src/Tracker.h
+/home/indresh/Karna/struck/src/Tracker.h
 Config.h
-/home/indresh/struck/struck/src/Config.h
+/home/indresh/Karna/struck/src/Config.h
 iostream
 -
 fstream

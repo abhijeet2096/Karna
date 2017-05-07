@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -DNDEBUG
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/include/opencv -I/usr/local/include -I/home/indresh/struck/struck/src -I/usr/local/include/eigen3 
+CXX_INCLUDES = -I/usr/local/include/opencv -I/usr/local/include -I/home/indresh/Karna/struck/src -I/usr/local/include/eigen3 
 

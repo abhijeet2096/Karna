@@ -4,19 +4,19 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/indresh/struck/struck/src/Config.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/Config.cpp.o"
-  "/home/indresh/struck/struck/src/Features.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/Features.cpp.o"
-  "/home/indresh/struck/struck/src/GraphUtils/GraphUtils.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/GraphUtils/GraphUtils.cpp.o"
-  "/home/indresh/struck/struck/src/HaarFeature.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/HaarFeature.cpp.o"
-  "/home/indresh/struck/struck/src/HaarFeatures.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/HaarFeatures.cpp.o"
-  "/home/indresh/struck/struck/src/HistogramFeatures.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/HistogramFeatures.cpp.o"
-  "/home/indresh/struck/struck/src/ImageRep.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/ImageRep.cpp.o"
-  "/home/indresh/struck/struck/src/LaRank.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/LaRank.cpp.o"
-  "/home/indresh/struck/struck/src/MultiFeatures.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/MultiFeatures.cpp.o"
-  "/home/indresh/struck/struck/src/RawFeatures.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/RawFeatures.cpp.o"
-  "/home/indresh/struck/struck/src/Sampler.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/Sampler.cpp.o"
-  "/home/indresh/struck/struck/src/Tracker.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/Tracker.cpp.o"
-  "/home/indresh/struck/struck/src/main.cpp" "/home/indresh/struck/struck/build/CMakeFiles/struck.dir/src/main.cpp.o"
+  "/home/indresh/Karna/struck/src/Config.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/Config.cpp.o"
+  "/home/indresh/Karna/struck/src/Features.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/Features.cpp.o"
+  "/home/indresh/Karna/struck/src/GraphUtils/GraphUtils.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/GraphUtils/GraphUtils.cpp.o"
+  "/home/indresh/Karna/struck/src/HaarFeature.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/HaarFeature.cpp.o"
+  "/home/indresh/Karna/struck/src/HaarFeatures.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/HaarFeatures.cpp.o"
+  "/home/indresh/Karna/struck/src/HistogramFeatures.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/HistogramFeatures.cpp.o"
+  "/home/indresh/Karna/struck/src/ImageRep.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/ImageRep.cpp.o"
+  "/home/indresh/Karna/struck/src/LaRank.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/LaRank.cpp.o"
+  "/home/indresh/Karna/struck/src/MultiFeatures.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/MultiFeatures.cpp.o"
+  "/home/indresh/Karna/struck/src/RawFeatures.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/RawFeatures.cpp.o"
+  "/home/indresh/Karna/struck/src/Sampler.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/Sampler.cpp.o"
+  "/home/indresh/Karna/struck/src/Tracker.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/Tracker.cpp.o"
+  "/home/indresh/Karna/struck/src/main.cpp" "/home/indresh/Karna/struck/build/CMakeFiles/struck.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
