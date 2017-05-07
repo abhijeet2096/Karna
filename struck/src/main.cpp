@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 	
 	if (useCamera)
 	{
-		if (!cap.open(0))
+		if (!cap.open(1))
 		{
 			cout << "error: could not start camera capture" << endl;
 			return EXIT_FAILURE;
@@ -190,7 +190,7 @@ int main(int argc, char* argv[])
 			}
 			else if (!tracker.IsInitialised())
 			{
-				rectangle(result, initBB, CV_RGB(255, 255, 255));
+				rectangle(result, initBB, CV_RGB(0, 0, 0));
 			}
 		}
 		else

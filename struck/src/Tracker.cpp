@@ -143,7 +143,7 @@ void Tracker::Initialise(const cv::Mat& frame, FloatRect bb)
 {
 	m_bb = IntRect(bb);
 	ImageRep image(frame, m_needsIntegralImage, m_needsIntegralHist);
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 100; ++i)
 	{
 		UpdateLearner(image);
 	}
@@ -184,7 +184,7 @@ void Tracker::Track(const cv::Mat& frame)
 		}
 	}
 
-	if(bestScore >0.6){
+	if(bestScore >0.2){
 		lTrue.x = keptRects[bestInd].XMin() - last.x;
 		lTrue.y = keptRects[bestInd].YMin() - last.y;
 
@@ -192,26 +192,28 @@ void Tracker::Track(const cv::Mat& frame)
 		last.y = keptRects[bestInd].YMin();
 
 		counter = 0;
-	}
-	
-	UpdateDebugImage(keptRects, m_bb, scores);
-	
-	if (bestScore > 0.6)
-	{ 
+
 		m_bb = keptRects[bestInd];
-		UpdateLearner(image);
-		#if VERBOSE		
-			cout << "track score: " << bestScore << endl;
-		#endif
 	}
 	else{
-		if(last.x + (2 * counter * lTrue.x) >= 0 && last.x + (2 * counter * lTrue.x) < 750 && last.y + (2 * counter * lTrue.y) >= 0 && last.y + (2 * counter * lTrue.y) <550){
+		if(last.x + (2 * counter * lTrue.x) >= 0 && last.x + (2 * counter * lTrue.x) < 700 && last.y + (2 * counter * lTrue.y) >= 0 && last.y + (2 * counter * lTrue.y) <500){
 			FloatRect tmp(last.x + (2 * counter * lTrue.x), last.y + (2 * counter * lTrue.y), 100, 100);
 			m_bb = tmp;
 			counter++;
 		}
 
 		cout<<"OBJECT LOST!"<<endl;
+	}
+	
+	UpdateDebugImage(keptRects, m_bb, scores);
+	
+	if (bestScore > 0.6)
+	{ 
+		
+		UpdateLearner(image);
+		#if VERBOSE		
+			cout << "track score: " << bestScore << endl;
+		#endif
 	}
 
 	
