@@ -225,6 +225,8 @@ void Tracker::Track(const cv::Mat& frame, const Point& screenDimension, const Po
 		#endif
 	}
 
+	cout<<"Score : "<<bestScore<<endl;
+
 	
 }
 

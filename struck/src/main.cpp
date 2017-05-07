@@ -104,8 +104,8 @@ int main(int argc, char* argv[])
 
 		initBB = IntRect(conf.frameWidth/2-kLiveBoxWidth/2, conf.frameHeight/2-kLiveBoxHeight/2, kLiveBoxWidth, kLiveBoxHeight);
 		cout << "press 'i' to initialise tracker"<<endl;
-		cout << "'q' to stop initialization" << endl;
-		cout << "'d' to take current frame as ground truth" << endl;
+		cout << "press 's' to take current frame as ground truth" << endl;
+		cout << "press 't' to start tracking" << endl;
 	}
 	else
 	{
@@ -171,6 +171,7 @@ int main(int argc, char* argv[])
 	bool doInitialise = false;
 	bool takeGround = false;
 	srand(conf.seed);
+	tracker.Reset();
 	for (int frameInd = startFrame; frameInd <= endFrame; ++frameInd)
 	{
 		Mat frame;
@@ -187,9 +188,9 @@ int main(int argc, char* argv[])
 					tracker.Initialise(frame, initBB);
 
 				takeGround = false;
+
+				rectangle(result, initBB, CV_RGB(0, 0, 0));
 			}
-			
-			rectangle(result, initBB, CV_RGB(0, 0, 0));
 		}
 		else
 		{			
@@ -246,10 +247,10 @@ int main(int argc, char* argv[])
 				{
 					doInitialise = true;
 				}
-				else if (key == 113 && useCamera){ //q
+				else if (key == 116 && useCamera){ //q
 					doInitialise = false;
 				}
-				else if (key == 100 && useCamera){//d
+				else if (key == 115 && useCamera){//d
 					takeGround = true;
 				}
 			}

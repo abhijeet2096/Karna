@@ -123,13 +123,13 @@ void Config::SetDefaults()
 	sequenceName = "";
 	resultsPath = "";
 	
-	frameWidth = 800;
-	frameHeight = 600;
+	frameWidth = 1024;
+	frameHeight = 768;
 	
 	seed = 0;
 	searchRadius = 30;
 	svmC = 1.0;
-	svmBudgetSize = 150;
+	svmBudgetSize = 100;
 	
 	features.clear();
 }
