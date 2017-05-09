@@ -1992,7 +1992,10 @@ CMakeFiles/struck.dir/src/Tracker.cpp.o
  /usr/local/include/opencv2/video/tracking.hpp
 CMakeFiles/struck.dir/src/main.cpp.o
  /home/indresh/Karna/struck/src/Config.h
+ /home/indresh/Karna/struck/src/ImageRep.h
+ /home/indresh/Karna/struck/src/LaRank.h
  /home/indresh/Karna/struck/src/Rect.h
+ /home/indresh/Karna/struck/src/Sample.h
  /home/indresh/Karna/struck/src/Tracker.h
  /home/indresh/Karna/struck/src/main.cpp
  /usr/local/include/eigen3/Eigen/Core

@@ -1991,7 +1991,10 @@ CMakeFiles/struck.dir/src/Tracker.cpp.o: /usr/local/include/opencv2/objdetect/ob
 CMakeFiles/struck.dir/src/Tracker.cpp.o: /usr/local/include/opencv2/video/tracking.hpp
 
 CMakeFiles/struck.dir/src/main.cpp.o: ../src/Config.h
+CMakeFiles/struck.dir/src/main.cpp.o: ../src/ImageRep.h
+CMakeFiles/struck.dir/src/main.cpp.o: ../src/LaRank.h
 CMakeFiles/struck.dir/src/main.cpp.o: ../src/Rect.h
+CMakeFiles/struck.dir/src/main.cpp.o: ../src/Sample.h
 CMakeFiles/struck.dir/src/main.cpp.o: ../src/Tracker.h
 CMakeFiles/struck.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/struck.dir/src/main.cpp.o: /usr/local/include/eigen3/Eigen/Core

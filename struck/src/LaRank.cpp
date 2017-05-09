@@ -25,6 +25,11 @@
  * 
  */
 
+#include <sstream>
+#include <fstream>
+#include <string>
+#include <vector>
+
 #include "LaRank.h"
 
 #include "Config.h"
@@ -40,9 +45,67 @@ using namespace cv;
 
 using namespace std;
 using namespace Eigen;
+using namespace cv;
 
 static const int kMaxSVs = 2000; // TODO (only used when no budget)
 
+
+//To write Eigen Matrix/Vector in a file (Binary format)
+template<class Matrix>
+ostream&  writeEigen(ostream& os, const Matrix& matrix){
+    typename Matrix::Index rows=matrix.rows(), cols=matrix.cols();
+    os.write((char*) (&rows), sizeof(typename Matrix::Index));
+    os.write((char*) (&cols), sizeof(typename Matrix::Index));
+    os.write((char*) matrix.data(), rows*cols*sizeof(typename Matrix::Scalar) );
+    return os;
+}
+
+//To read Eigen Matrix/Vector in a file (Binary format)
+template<class Matrix>
+istream& readEigen(istream& is, Matrix& matrix){
+    typename Matrix::Index rows=0, cols=0;
+    is.read((char*) (&rows),sizeof(typename Matrix::Index));
+    is.read((char*) (&cols),sizeof(typename Matrix::Index));
+    matrix.resize(rows, cols);
+    is.read( (char *) matrix.data() , rows*cols*sizeof(typename Matrix::Scalar) );
+}
+
+//To write cv::Mat from a xml file
+void writeMat(const char* fileName, const vector<Mat>& images){
+	FileStorage fs(fileName, FileStorage::WRITE);
+	
+	int size = images.size();
+
+	fstream file((string(fileName) + string(".size")).c_str(), ios::out);
+	file.write((char*) &size, sizeof(int));
+	file.close();
+
+	for(int i = 0; i < size; i++){
+		stringstream ss;
+		ss << "Mat" << i ;
+		string tmp = ss.str();
+		fs << tmp << images[i];
+	}
+}
+
+//To read cv::Mat from a xml file
+void readMat(const char* fileName, vector<Mat>& images){
+	FileStorage fs(fileName, FileStorage::READ);
+	int size;
+
+	fstream file((string(fileName) + string(".size")).c_str(), ios::in);
+	file.read((char*) &size, sizeof(int));
+	file.close();
+
+	for(int i = 0; i < size; i++){
+		Mat p;
+		stringstream ss;
+		ss << "Mat" << i ;
+		string tmp = ss.str();
+		fs[tmp] >> p;
+		images.push_back(p);
+	}
+}
 
 LaRank::LaRank(const Config& conf, const Features& features, const Kernel& kernel) :
 	m_config(conf),
@@ -544,4 +607,290 @@ void LaRank::UpdateDebugImage()
 	IplImage II = I;
 	setGraphColor(0);
 	drawFloatGraph(vals, n, &II, 0.f, 0.f, I.cols, I.rows);
+}
+
+void LaRank::write(const char* profile){
+
+	//LaRank_config
+	string path = "../Profiles/";
+	path += profile;
+	fstream file((path + string("/LaRank_config.dat")).c_str(), ios::out);
+
+	file.write((char*) &m_C, sizeof(double));
+	writeEigen<MatrixXd>(file, m_K);
+
+	file.close();
+
+	//m_debugImage.xml
+	vector<Mat> tmpVector;
+	tmpVector.push_back(m_debugImage);
+	writeMat((path + string("/m_debugImage.xml")).c_str(), tmpVector);
+
+	//SupportPattern
+	writeSP(profile);
+
+	//SupportVectors
+	writeSV(profile);
+}
+
+void LaRank::read(const char* profile){
+
+	//LaRank_config
+	string path = "../Profiles/";
+	path += profile;
+	fstream file((path + string("/LaRank_config.dat")).c_str(), ios::in);
+
+	if(!file){
+		cout<<"Profile might be corrupted."<<endl;
+		return;
+	}
+
+	file.read((char*) &m_C, sizeof(double));
+	readEigen<MatrixXd>(file, m_K);
+
+	file.close();
+
+	//m_debugImage.xml
+	vector<Mat> tmpVector;
+	readMat((path + string("/m_debugImage.xml")).c_str(), tmpVector);
+	m_debugImage = tmpVector[0];
+
+	//SupportPatterns
+	if(!readSP(profile)){
+		cout<<"Profile might be corrupted."<<endl;
+		return;
+	}
+
+	//SupportVectors
+	if(!readSV(profile)){
+		cout<<"Profile might be corrupted."<<endl;
+		return;
+	}
+}
+
+void LaRank::writeSP(const char* profile){
+
+	string root = "../Profiles/";
+	root += profile;
+	root += "/SPS";
+	
+	if(system((string("mkdir -p ") + root).c_str()) == -1){
+		cout<<"Cannot create "<<root<<endl;
+		return;
+	}
+
+	SupportPattern *sp;
+
+	int spSize = m_sps.size();
+	fstream file((root + string("/spSize.dat")).c_str(), ios::out);
+	file.write((char*) &spSize, sizeof(int));
+	file.close();
+
+	for(int i = 0; i < m_sps.size(); i++){
+
+		sp = m_sps[i];
+
+		stringstream ss;
+		ss << "SPS" << i;
+		string folder = ss.str();
+		string path = root;
+		path += "/";
+		path += folder;
+		
+		if(system((string("mkdir -p ") + path).c_str()) == -1){
+			cout<<"Cannot create "<<path<<endl;
+			return;
+		}
+
+		file.open((path + string("/values.dat")).c_str(), ios::out);
+
+		file.write((char*) &(sp->y), sizeof(int));
+		file.write((char*) &(sp->refCount), sizeof(int));
+
+		int size = (sp->x).size();
+		file.write((char*) &size, sizeof(int));
+
+		for(int j = 0; j < size; j++)
+			writeEigen<VectorXd>(file, sp->x[j]);
+
+		size = (sp->yv).size();
+		file.write((char*) &size, sizeof(int));		
+		
+		for(int j = 0; j < size; j++)
+			file.write((char*) &(sp->yv[j]), sizeof(FloatRect)); 
+
+		writeMat((path + string("/images.xml")).c_str(), sp->images);
+
+		file.close();
+	}
+}
+
+bool LaRank::readSP(const char* profile){
+
+	string root = "../Profiles/";
+	root += profile;
+	root += "/SPS";
+
+	SupportPattern *sp;
+
+	int spSize;
+	fstream file((root + string("/spSize.dat")).c_str(), ios::in);
+	file.read((char*) &spSize, sizeof(int));
+	file.close();
+
+	for(int i = 0; i < spSize; i++){
+
+		sp = new SupportPattern;
+
+		stringstream ss;
+		ss << "SPS" << i;
+		string folder = ss.str();
+		string path = root;
+		path += "/";
+		path += folder;
+
+		file.open((path + string("/values.dat")).c_str(), ios::in);
+
+		if(!file){
+			cout<<"Support Patterns might be corrupted."<<endl;
+			return false;
+		}
+
+		file.read((char*) &(sp->y), sizeof(int));
+		file.read((char*) &(sp->refCount), sizeof(int));
+
+		int size;
+		file.read((char*) &size, sizeof(int));
+
+		for(int j = 0; j < size; j++){
+			VectorXd v;
+			readEigen<VectorXd>(file, v);
+			sp->x.push_back(v);
+		}
+
+		file.read((char*) &size, sizeof(int));
+		for(int j = 0; j < size; j++){
+			FloatRect fr;
+			file.read((char*) &fr, sizeof(FloatRect));
+			sp->yv.push_back(fr); 
+		}
+
+		readMat((path + string("/images.xml")).c_str(), sp->images);
+
+		file.close();
+
+		m_sps.push_back(sp);
+	}
+
+	return true;
+}
+
+void LaRank::writeSV(const char* profile){
+
+	string root = "../Profiles/";
+	root += profile;
+	root += "/SVS";
+	
+	if(system((string("mkdir -p ") + root).c_str()) == -1){
+		cout<<"Cannot create "<<root<<endl;
+		return;
+	}
+
+	SupportVector *sv;
+
+	int svSize = m_svs.size();
+	fstream file((root + string("/svSize.dat")).c_str(), ios::out);
+	file.write((char*) &svSize, sizeof(int));
+	file.close();
+
+	for(int i = 0; i < m_svs.size(); i++){
+
+		sv = m_svs[i];
+
+		stringstream ss;
+		ss << "SVS" << i;
+		string folder = ss.str();
+		string path = root;
+		path += "/";
+		path += folder;
+
+		if(system((string("mkdir -p ") + path).c_str()) == -1){
+			cout<<"Cannot create "<<path<<endl;
+			return;
+		}
+
+		fstream file((path + string("/values.dat")).c_str(), ios::out);
+
+		file.write((char*) &(sv->y), sizeof(int));
+		file.write((char*) &(sv->b), sizeof(double));
+		file.write((char*) &(sv->g), sizeof(double));
+
+		int index;
+
+		for(int j = 0; j < m_sps.size(); j++)
+			if(sv->x == m_sps[j]){
+				index = j; 
+				break;
+			}
+
+		file.write((char*) &index, sizeof(int));
+
+		vector<Mat> tmpVector;
+		tmpVector.push_back(sv->image);
+
+		writeMat((path + string("/image.xml")).c_str(), tmpVector);
+
+		file.close();		
+	}
+}
+
+bool LaRank::readSV(const char* profile){
+
+	string root = "../Profiles/";
+	root += profile;
+	root += "/SVS";
+
+	SupportVector *sv;
+
+	int svSize;
+	fstream file((root + string("/svSize.dat")).c_str(), ios::in);
+	file.read((char*) &svSize, sizeof(int));
+	file.close();
+
+
+	for(int i = 0; i < svSize; i++){
+
+		sv = new SupportVector;
+
+		stringstream ss;
+		ss << "SVS" << i;
+		string folder = ss.str();
+		string path = root;
+		path += "/";
+		path += folder;
+
+		file.open((path + string("/values.dat")).c_str(), ios::in);
+
+		if(!file){
+			cout<<"Support Vectors might be corrupted."<<endl;
+			return false;
+		}
+
+		file.read((char*) &(sv->y), sizeof(int));
+		file.read((char*) &(sv->b), sizeof(double));
+		file.read((char*) &(sv->g), sizeof(double));
+
+		int index;
+		file.read((char*) &index, sizeof(int));
+
+		sv->x = m_sps[index];
+
+		vector<Mat> tmpVector;
+		readMat((path + string("/image.xml")).c_str(), tmpVector);
+		sv->image = tmpVector[0];
+
+		file.close();		
+
+		m_svs.push_back(sv);
+	}
 }

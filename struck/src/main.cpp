@@ -29,6 +29,7 @@
 #include "Config.h"
 
 #include <iostream>
+#include <string>
 #include <fstream>
 
 #include <opencv/cv.h>
@@ -38,9 +39,6 @@
 using namespace std;
 using namespace cv;
 using namespace Eigen;
-
-static const int kLiveBoxWidth = 150;
-static const int kLiveBoxHeight = 150;
 
 void rectangle(Mat& rMat, const FloatRect& rRect, const Scalar& rColour)
 {
@@ -90,7 +88,7 @@ int main(int argc, char* argv[])
 	
 	if (useCamera)
 	{
-		if (!cap.open(0))
+		if (!cap.open(1))
 		{
 			cout << "error: could not start camera capture" << endl;
 			return EXIT_FAILURE;
@@ -102,10 +100,15 @@ int main(int argc, char* argv[])
 		scaleW = (float)conf.frameWidth/tmp.cols;
 		scaleH = (float)conf.frameHeight/tmp.rows;
 
-		initBB = IntRect(conf.frameWidth/2-kLiveBoxWidth/2, conf.frameHeight/2-kLiveBoxHeight/2, kLiveBoxWidth, kLiveBoxHeight);
-		cout << "press 'i' to initialise tracker"<<endl;
-		cout << "press 's' to take current frame as ground truth" << endl;
-		cout << "press 't' to start tracking" << endl;
+		initBB = IntRect(conf.frameWidth/2-conf.liveBoxWidth/2, conf.frameHeight/2-conf.liveBoxHeight/2, conf.liveBoxWidth, conf.liveBoxHeight);
+		cout << "Press\n'i' to initialise tracker"<<endl;
+		cout << "'s' to take current frame as ground truth" << endl;
+		cout << "'t' to start tracking" << endl;
+		cout << "'l' to load profile"<<endl;
+		cout << "'e' to export data"<<endl;
+		cout << "'p' to pause tracking"<<endl;
+		cout << "'r' to reset ground truth"<<endl;
+		cout << "'esc' to exit"<<endl;
 	}
 	else
 	{
@@ -189,7 +192,7 @@ int main(int argc, char* argv[])
 
 				takeGround = false;
 
-				rectangle(result, initBB, CV_RGB(0, 0, 0));
+				rectangle(result, initBB, CV_RGB(255, 255, 0));
 			}
 		}
 		else
@@ -213,14 +216,14 @@ int main(int argc, char* argv[])
 		
 		if (!doInitialise && tracker.IsInitialised())
 		{
-			tracker.Track(frame, Point(conf.frameWidth, conf.frameHeight), Point(kLiveBoxWidth, kLiveBoxHeight));
+			tracker.Track(frame, Point(conf.frameWidth, conf.frameHeight), Point(conf.liveBoxWidth, conf.liveBoxHeight));
 			
 			if (!conf.quietMode && conf.debugMode)
 			{
 				tracker.Debug();
 			}
 			
-			rectangle(result, tracker.GetBB(), CV_RGB(0, 255, 0));
+			rectangle(result, tracker.GetBB(), CV_RGB(0, 0, 255));
 			
 			if (outFile)
 			{
@@ -243,15 +246,84 @@ int main(int argc, char* argv[])
 				{
 					paused = !paused;
 				}
-				else if (key == 105 && useCamera)
+				else if (key == 105 && useCamera)//i
 				{
 					doInitialise = true;
 				}
-				else if (key == 116 && useCamera){ //q
+				else if (key == 116 && useCamera){ //t
 					doInitialise = false;
 				}
-				else if (key == 115 && useCamera){//d
+				else if (key == 115 && useCamera){//s
 					takeGround = true;
+				}
+				else if (key == 114 && useCamera){//r
+
+					tracker.Reset();
+					cout<<"**Reinitialize before tracking"<<endl;
+				}
+				else if (key == 101 && useCamera){//e
+
+					string profileName, filePath = "../Profiles/", path;
+					char overwrite;
+
+					cout<<"Enter profile name : ";
+					cin>>profileName;
+					path = filePath + profileName;
+
+					fstream profileExport;
+
+					profileExport.open((path + string("/config.dat")).c_str(), ios::in);
+
+					while(profileExport){
+						
+						cout << "\nProfile already exists.\nDo you want to overwrite(y/n) : ";
+						cin >> overwrite;
+
+						if(overwrite == 'y')
+							break;
+					
+						cout<<"Enter new profile name : ";
+						cin>>profileName;
+						path = filePath + profileName;						
+						
+						profileExport.close();
+						profileExport.open((path + string("/config.dat")).c_str(), ios::in);						
+					}
+
+					profileExport.close();
+					if(overwrite != 'y')
+						if(system((string("mkdir -p ") + path).c_str()) == -1)
+							return EXIT_FAILURE;
+					
+					conf.write(profileName.c_str());
+					tracker.write(profileName.c_str());
+				}
+				else if (key == 108 && useCamera){ //l
+
+					string profileName, filePath = "../Profiles/", path;
+					char overwrite;
+
+					cout<<"Enter profile name : ";
+					cin>>profileName;
+					path = filePath + profileName;
+
+					fstream profileExport;
+
+					profileExport.open((path + string("/config.dat")).c_str(), ios::in);
+
+					if(!profileExport){
+						
+						cout << "\nProfile does not exists."<<endl;							
+					}
+					else{
+						conf.read(profileName.c_str());
+
+						tracker.Reset();
+
+						tracker.read(profileName.c_str());
+
+						doInitialise = true;
+					}	
 				}
 			}
 			if (conf.debugMode && frameInd == endFrame)

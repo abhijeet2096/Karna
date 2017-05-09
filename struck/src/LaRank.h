@@ -33,8 +33,11 @@
 
 #include <vector>
 #include <Eigen/Core>
+#include <string>
 
 #include <opencv/cv.h>
+
+using namespace std;
 
 class Config;
 class Features;
@@ -50,6 +53,9 @@ public:
 	virtual void Update(const MultiSample& x, int y);
 	
 	virtual void Debug();
+	
+	void write(const char* profile);
+	void read(const char* profile);
 
 private:
 
@@ -112,6 +118,10 @@ private:
 
 	double Evaluate(const Eigen::VectorXd& x, const FloatRect& y) const;
 	void UpdateDebugImage();
+	void writeSP(const char* profile);
+	bool readSP(const char* profile);
+	void writeSV(const char* profile);
+	bool readSV(const char* profile);
 };
 
 #endif

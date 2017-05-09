@@ -29,6 +29,7 @@
 #define TRACKER_H
 
 #include "Rect.h"
+#include "LaRank.h"
 
 #include <vector>
 #include <Eigen/Core>
@@ -55,6 +56,9 @@ public:
 	
 	inline const FloatRect& GetBB() const { return m_bb; }
 	inline bool IsInitialised() const { return m_initialised; }
+
+	void write(const char* profile){ m_pLearner->write(profile);}
+	void read(const char* profile){ m_pLearner->read(profile); m_initialised = true;}
 	
 private:
 	const Config& m_config;

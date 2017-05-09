@@ -125,6 +125,14 @@ cmath
 -
 
 /home/indresh/Karna/struck/src/LaRank.cpp
+sstream
+-
+fstream
+-
+string
+-
+vector
+-
 LaRank.h
 /home/indresh/Karna/struck/src/LaRank.h
 Config.h
@@ -150,6 +158,8 @@ Sample.h
 vector
 -
 Eigen/Core
+-
+string
 -
 opencv/cv.h
 -
@@ -249,6 +259,8 @@ algorithm
 /home/indresh/Karna/struck/src/Tracker.h
 Rect.h
 /home/indresh/Karna/struck/src/Rect.h
+LaRank.h
+/home/indresh/Karna/struck/src/LaRank.h
 vector
 -
 Eigen/Core
@@ -262,6 +274,8 @@ Tracker.h
 Config.h
 /home/indresh/Karna/struck/src/Config.h
 iostream
+-
+string
 -
 fstream
 -

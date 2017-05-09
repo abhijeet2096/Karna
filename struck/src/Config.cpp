@@ -35,6 +35,10 @@ using namespace std;
 
 Config::Config(const std::string& path)
 {
+	load(path);
+}
+
+void Config::load(const std::string& path){
 	SetDefaults();
 	
 	ifstream f(path.c_str());
@@ -68,6 +72,8 @@ Config::Config(const std::string& path)
 		else if (name == "resultsPath") iss >> resultsPath;
 		else if (name == "frameWidth") iss >> frameWidth;
 		else if (name == "frameHeight") iss >> frameHeight;
+		else if (name == "liveBoxWidth") iss >> liveBoxWidth;
+		else if (name == "liveBoxHeight") iss >> liveBoxHeight;
 		else if (name == "seed") iss >> seed;
 		else if (name == "searchRadius") iss >> searchRadius;
 		else if (name == "svmC") iss >> svmC;
@@ -125,6 +131,8 @@ void Config::SetDefaults()
 	
 	frameWidth = 1024;
 	frameHeight = 768;
+	liveBoxWidth = 150;
+	liveBoxHeight = 150;
 	
 	seed = 0;
 	searchRadius = 30;
@@ -176,6 +184,8 @@ ostream& operator<< (ostream& out, const Config& conf)
 	out << "  resultsPath        = " << conf.resultsPath << endl;
 	out << "  frameWidth         = " << conf.frameWidth << endl;
 	out << "  frameHeight        = " << conf.frameHeight << endl;
+	out << "  liveBoxWidth       = " << conf.liveBoxWidth << endl;
+	out << "  liveBoxHeight       = " << conf.liveBoxHeight << endl;
 	out << "  seed               = " << conf.seed << endl;
 	out << "  searchRadius       = " << conf.searchRadius << endl;
 	out << "  svmC               = " << conf.svmC << endl;
@@ -198,4 +208,38 @@ ostream& operator<< (ostream& out, const Config& conf)
 	}
 	
 	return out;
+}
+
+void Config::read(const char* profile){
+
+	string root = "../Profiles/";
+	root += profile;
+	root += "/config.dat";
+
+	load(root);
+}
+
+void Config::write(const char* profile){
+
+	string root = "../Profiles/";
+	root += profile;
+	root += "/config.dat";
+
+	fstream file(root.c_str(), ios::out);
+
+	file << "quietMode = " << quietMode << endl;
+	file << "debugMode = " << debugMode << endl;
+	file << "frameWidth = " << frameWidth << endl;
+	file << "frameHeight = " << frameHeight << endl;
+	file << "liveBoxWidth = " << liveBoxWidth << endl;
+	file << "liveBoxHeight = " << liveBoxHeight << endl;
+	file << "seed = " << seed << endl;
+	file << "searchRadius = " << searchRadius << endl;
+	file << "svmC = " << svmC << endl;
+	file << "svmBudgetSize = " << svmBudgetSize << endl;
+	file << "feature = " << Config::FeatureName(features[0].feature) << " " << Config::KernelName(features[0].kernel) << " " << features[0].params[0] << endl;
+
+	file.close();  
+
+
 }

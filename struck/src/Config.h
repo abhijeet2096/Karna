@@ -71,6 +71,8 @@ public:
 	
 	int								frameWidth;
 	int								frameHeight;
+	int 							liveBoxWidth;
+	int 							liveBoxHeight;
 	
 	int								seed;
 	int								searchRadius;
@@ -79,9 +81,12 @@ public:
 	std::vector<FeatureKernelPair>	features;
 	
 	friend std::ostream& operator<< (std::ostream& out, const Config& conf);
+	void read(const char* profile);
+	void write(const char* profile);
 	
 private:
 	void SetDefaults();
+	void load(const std::string& path);
 	static std::string FeatureName(FeatureType f);
 	static std::string KernelName(KernelType k);
 };
