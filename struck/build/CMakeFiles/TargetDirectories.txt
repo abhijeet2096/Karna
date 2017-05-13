@@ -1,3 +1,0 @@
-/home/indresh/Karna/struck/build/CMakeFiles/edit_cache.dir
-/home/indresh/Karna/struck/build/CMakeFiles/rebuild_cache.dir
-/home/indresh/Karna/struck/build/CMakeFiles/struck.dir

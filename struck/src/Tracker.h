@@ -59,6 +59,7 @@ public:
 
 	void write(const char* profile){ m_pLearner->write(profile);}
 	void read(const char* profile){ m_pLearner->read(profile); m_initialised = true;}
+	bool isDetected(){return detected;}
 	
 private:
 	const Config& m_config;
@@ -70,6 +71,7 @@ private:
 	cv::Mat m_debugImage;
 	bool m_needsIntegralImage;
 	bool m_needsIntegralHist;
+	bool detected;
 	
 	void UpdateLearner(const ImageRep& image);
 	void UpdateDebugImage(const std::vector<FloatRect>& samples, const FloatRect& centre, const std::vector<double>& scores);

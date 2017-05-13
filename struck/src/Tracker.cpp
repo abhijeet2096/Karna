@@ -58,7 +58,8 @@ Tracker::Tracker(const Config& conf) :
 	m_initialised(false),
 	m_pLearner(0),
 	m_debugImage(2*conf.searchRadius+1, 2*conf.searchRadius+1, CV_32FC1),
-	m_needsIntegralImage(false)
+	m_needsIntegralImage(false),
+	detected(true)
 {
 	Reset();
 }
@@ -194,6 +195,7 @@ void Tracker::Track(const cv::Mat& frame, const Point& screenDimension, const Po
 
 		counter = 0;
 		nframes = 0;
+		detected = true;
 
 	}
 	else{
@@ -211,6 +213,7 @@ void Tracker::Track(const cv::Mat& frame, const Point& screenDimension, const Po
 
 		nframes++;
 		cout<<"OBJECT LOST!"<<endl;
+		detected = false;
 	}
 	
 	UpdateDebugImage(keptRects, m_bb, scores);
@@ -223,7 +226,7 @@ void Tracker::Track(const cv::Mat& frame, const Point& screenDimension, const Po
 		m_bb = tmp;
 	}
 
-	if (bestScore > 0.6)
+	if ((bestScore > 0.6 || bestScore < 0.3) && bestScore > 0.2)
 	{ 
 		UpdateLearner(image);
 	}

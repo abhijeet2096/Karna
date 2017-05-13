@@ -40,6 +40,30 @@ using namespace std;
 using namespace cv;
 using namespace Eigen;
 
+void moveQuadcopter(const FloatRect& bb){
+
+	if(bb.XMax() < 600 && bb.XMin() > 400 && bb.YMin() > 300 && bb.YMax() < 500)
+		//Stop Quadcopter
+
+	if(bb.XMax() > 600 || bb.XMin() < 400){
+		if(bb.XMax() > 600){
+			cout<<"rotate Left";
+		}
+		else if(bb.XMin() < 400){
+			cout<<"rotate Right";
+		}
+	}
+
+	if(bb.YMin() < 300 || bb.YMax() > 500){
+		if(bb.YMin() < 300){
+			cout<<"move Forward";
+		}
+		else if(bb.YMax() > 500){
+			cout<<"move Backward";	
+		}
+	}
+}
+
 void rectangle(Mat& rMat, const FloatRect& rRect, const Scalar& rColour)
 {
 	IntRect r(rRect);
@@ -86,132 +110,54 @@ int main(int argc, char* argv[])
 	float scaleW = 1.f;
 	float scaleH = 1.f;
 	
-	if (useCamera)
+	if (!cap.open(0))
 	{
-		if (!cap.open(1))
-		{
-			cout << "error: could not start camera capture" << endl;
-			return EXIT_FAILURE;
-		}
-		startFrame = 0;
-		endFrame = INT_MAX;
-		Mat tmp;
-		cap >> tmp;
-		scaleW = (float)conf.frameWidth/tmp.cols;
-		scaleH = (float)conf.frameHeight/tmp.rows;
+		cout << "error: could not start camera capture" << endl;
+		return EXIT_FAILURE;
+	}
+	startFrame = 0;
+	endFrame = INT_MAX;
+	Mat tmp;
+	cap >> tmp;
+	scaleW = (float)conf.frameWidth/tmp.cols;
+	scaleH = (float)conf.frameHeight/tmp.rows;
 
-		initBB = IntRect(conf.frameWidth/2-conf.liveBoxWidth/2, conf.frameHeight/2-conf.liveBoxHeight/2, conf.liveBoxWidth, conf.liveBoxHeight);
-		cout << "Press\n'i' to initialise tracker"<<endl;
-		cout << "'s' to take current frame as ground truth" << endl;
-		cout << "'t' to start tracking" << endl;
-		cout << "'l' to load profile"<<endl;
-		cout << "'e' to export data"<<endl;
-		cout << "'p' to pause tracking"<<endl;
-		cout << "'r' to reset ground truth"<<endl;
-		cout << "'esc' to exit"<<endl;
-	}
-	else
-	{
-		// parse frames file
-		string framesFilePath = conf.sequenceBasePath+"/"+conf.sequenceName+"/"+conf.sequenceName+"_frames.txt";
-		ifstream framesFile(framesFilePath.c_str(), ios::in);
-		if (!framesFile)
-		{
-			cout << "error: could not open sequence frames file: " << framesFilePath << endl;
-			return EXIT_FAILURE;
-		}
-		string framesLine;
-		getline(framesFile, framesLine);
-		sscanf(framesLine.c_str(), "%d,%d", &startFrame, &endFrame);
-		if (framesFile.fail() || startFrame == -1 || endFrame == -1)
-		{
-			cout << "error: could not parse sequence frames file" << endl;
-			return EXIT_FAILURE;
-		}
-		
-		imgFormat = conf.sequenceBasePath+"/"+conf.sequenceName+"/imgs/img%05d.png";
-		
-		// read first frame to get size
-		char imgPath[256];
-		sprintf(imgPath, imgFormat.c_str(), startFrame);
-		Mat tmp = cv::imread(imgPath, 0);
-		scaleW = (float)conf.frameWidth/tmp.cols;
-		scaleH = (float)conf.frameHeight/tmp.rows;
-		
-		// read init box from ground truth file
-		string gtFilePath = conf.sequenceBasePath+"/"+conf.sequenceName+"/"+conf.sequenceName+"_gt.txt";
-		ifstream gtFile(gtFilePath.c_str(), ios::in);
-		if (!gtFile)
-		{
-			cout << "error: could not open sequence gt file: " << gtFilePath << endl;
-			return EXIT_FAILURE;
-		}
-		string gtLine;
-		getline(gtFile, gtLine);
-		float xmin = -1.f;
-		float ymin = -1.f;
-		float width = -1.f;
-		float height = -1.f;
-		sscanf(gtLine.c_str(), "%f,%f,%f,%f", &xmin, &ymin, &width, &height);
-		if (gtFile.fail() || xmin < 0.f || ymin < 0.f || width < 0.f || height < 0.f)
-		{
-			cout << "error: could not parse sequence gt file" << endl;
-			return EXIT_FAILURE;
-		}
-		initBB = FloatRect(xmin*scaleW, ymin*scaleH, width*scaleW, height*scaleH);
-	}
-	
-	
+	initBB = IntRect(conf.frameWidth/2-conf.liveBoxWidth/2, conf.frameHeight/2-conf.liveBoxHeight/2, conf.liveBoxWidth, conf.liveBoxHeight);
+	cout << "Press\n'i' to initialise tracker"<<endl;
+	cout << "'s' to add current frame as ground truth" << endl;
+	cout << "'t' to start tracking" << endl;
+	cout << "'l' to load profile"<<endl;
+	cout << "'e' to export data"<<endl;
+	cout << "'p' to pause tracking"<<endl;
+	cout << "'r' to reset ground truth"<<endl;
+	cout << "'esc' to exit"<<endl;
 	
 	Tracker tracker(conf);
 	if (!conf.quietMode)
 	{
 		namedWindow("result");
 	}
+
+	int offsetx = 0, offsety = 0;
 	
 	Mat result(conf.frameHeight, conf.frameWidth, CV_8UC3);
 	bool paused = false;
 	bool doInitialise = false;
-	bool takeGround = false;
+	bool objectDetected = true;
 	srand(conf.seed);
-	tracker.Reset();
 	for (int frameInd = startFrame; frameInd <= endFrame; ++frameInd)
 	{
+		initBB = IntRect(conf.frameWidth/2-conf.liveBoxWidth/2 + offsetx, conf.frameHeight/2-conf.liveBoxHeight/2 + offsety, conf.liveBoxWidth, conf.liveBoxHeight);
 		Mat frame;
-		if (useCamera)
-		{
-			Mat frameOrig;
-			cap >> frameOrig;
-			resize(frameOrig, frame, Size(conf.frameWidth, conf.frameHeight));
-			flip(frame, frame, 1);
-			frame.copyTo(result);
-			if (doInitialise)
-			{
-				if(takeGround)
-					tracker.Initialise(frame, initBB);
-
-				takeGround = false;
-
-				rectangle(result, initBB, CV_RGB(255, 255, 0));
-			}
-		}
-		else
-		{			
-			char imgPath[256];
-			sprintf(imgPath, imgFormat.c_str(), frameInd);
-			Mat frameOrig = cv::imread(imgPath, 0);
-			if (frameOrig.empty())
-			{
-				cout << "error: could not read frame: " << imgPath << endl;
-				return EXIT_FAILURE;
-			}
-			resize(frameOrig, frame, Size(conf.frameWidth, conf.frameHeight));
-			cvtColor(frame, result, CV_GRAY2RGB);
 		
-			if (frameInd == startFrame)
-			{
-				tracker.Initialise(frame, initBB);
-			}
+		Mat frameOrig;
+		cap >> frameOrig;
+		resize(frameOrig, frame, Size(conf.frameWidth, conf.frameHeight));
+		flip(frame, frame, 1);
+		frame.copyTo(result);
+		if (doInitialise){
+
+			rectangle(result, initBB, CV_RGB(255, 255, 0));
 		}
 		
 		if (!doInitialise && tracker.IsInitialised())
@@ -224,6 +170,12 @@ int main(int argc, char* argv[])
 			}
 			
 			rectangle(result, tracker.GetBB(), CV_RGB(0, 0, 255));
+
+			if(tracker.isDetected())
+				moveQuadcopter(tracker.GetBB());
+			else{
+				//Stop quadcopter
+			}
 			
 			if (outFile)
 			{
@@ -254,7 +206,8 @@ int main(int argc, char* argv[])
 					doInitialise = false;
 				}
 				else if (key == 115 && useCamera){//s
-					takeGround = true;
+
+					tracker.Initialise(frame, initBB);
 				}
 				else if (key == 114 && useCamera){//r
 
@@ -324,6 +277,30 @@ int main(int argc, char* argv[])
 
 						doInitialise = true;
 					}	
+				}
+				else if(key == 65432 && doInitialise){
+					conf.liveBoxWidth += 10;
+				}
+				else if(key == 65433 && doInitialise){
+					conf.liveBoxWidth -= 10;
+				}
+				else if(key == 65431 && doInitialise){
+					conf.liveBoxHeight += 10;
+				}
+				else if(key == 65433 && doInitialise){
+					conf.liveBoxHeight -= 10;
+				}
+				else if(key == 65361 && doInitialise){
+					offsetx -= 10;
+				}
+				else if(key == 65363 && doInitialise){
+					offsetx += 10;
+				}
+				else if(key == 65362 && doInitialise){
+					offsety -= 10;
+				}
+				else if(key == 65364 && doInitialise){
+					offsety += 10;
 				}
 			}
 			if (conf.debugMode && frameInd == endFrame)
