@@ -40,26 +40,37 @@ using namespace std;
 using namespace cv;
 using namespace Eigen;
 
-void moveQuadcopter(const FloatRect& bb){
+int centerX, centerY;
 
-	if(bb.XMax() < 600 && bb.XMin() > 400 && bb.YMin() > 300 && bb.YMax() < 500)
-		//Stop Quadcopter
+void moveQuadcopter(const FloatRect& bb, int width, int height){
 
-	if(bb.XMax() > 600 || bb.XMin() < 400){
-		if(bb.XMax() > 600){
-			cout<<"rotate Left";
+	int range = width > height ? width : height;
+
+	if((bb.XMax() < centerX + range) &&
+	 (bb.XMin() > centerX - range) && 
+	 (bb.YMin() > centerY - range) && 
+	 (bb.YMax() < centerY + range)){
+		cout<<"Hover"<<endl;
+	}
+	
+	if((bb.XMax() > centerX + range) ||
+	 (bb.XMin() < centerX - range)){
+		
+		if(bb.XMax() > centerX + range){
+			cout<<"rotate Left"<<endl;
 		}
-		else if(bb.XMin() < 400){
-			cout<<"rotate Right";
+		else{
+			cout<<"rotate Right"<<endl;
 		}
 	}
 
-	if(bb.YMin() < 300 || bb.YMax() > 500){
-		if(bb.YMin() < 300){
-			cout<<"move Forward";
+	if((bb.YMin() < centerY - range) || 
+	 (bb.YMax() > centerY + range)){
+		if(bb.YMin() < centerY - range){
+			cout<<"move Forward"<<endl;
 		}
-		else if(bb.YMax() > 500){
-			cout<<"move Backward";	
+		else{
+			cout<<"move Backward"<<endl;	
 		}
 	}
 }
@@ -110,7 +121,7 @@ int main(int argc, char* argv[])
 	float scaleW = 1.f;
 	float scaleH = 1.f;
 	
-	if (!cap.open(0))
+	if (!cap.open("http://192.168.0.103:8081"))
 	{
 		cout << "error: could not start camera capture" << endl;
 		return EXIT_FAILURE;
@@ -153,7 +164,7 @@ int main(int argc, char* argv[])
 		Mat frameOrig;
 		cap >> frameOrig;
 		resize(frameOrig, frame, Size(conf.frameWidth, conf.frameHeight));
-		flip(frame, frame, 1);
+		//flip(frame, frame, 1);
 		frame.copyTo(result);
 		if (doInitialise){
 
@@ -172,9 +183,9 @@ int main(int argc, char* argv[])
 			rectangle(result, tracker.GetBB(), CV_RGB(0, 0, 255));
 
 			if(tracker.isDetected())
-				moveQuadcopter(tracker.GetBB());
+				moveQuadcopter(tracker.GetBB(), conf.liveBoxWidth, conf.liveBoxHeight);
 			else{
-				//Stop quadcopter
+				cout<<"Hover"<<endl;
 			}
 			
 			if (outFile)
@@ -204,6 +215,9 @@ int main(int argc, char* argv[])
 				}
 				else if (key == 116 && useCamera){ //t
 					doInitialise = false;
+
+					centerX = tracker.GetBB().XMin() + conf.liveBoxWidth/2;
+					centerY = tracker.GetBB().YMin() + conf.liveBoxHeight/2;
 				}
 				else if (key == 115 && useCamera){//s
 
@@ -281,7 +295,7 @@ int main(int argc, char* argv[])
 				else if(key == 65432 && doInitialise){
 					conf.liveBoxWidth += 10;
 				}
-				else if(key == 65433 && doInitialise){
+				else if(key == 65430 && doInitialise){
 					conf.liveBoxWidth -= 10;
 				}
 				else if(key == 65431 && doInitialise){

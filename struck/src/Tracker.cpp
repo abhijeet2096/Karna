@@ -199,17 +199,16 @@ void Tracker::Track(const cv::Mat& frame, const Point& screenDimension, const Po
 
 	}
 	else{
-
 		
-		if(nframes <= 100 && p.x + (2 * (counter + 1) * dp.x) > 0 && 
-			p.x + (2 * (counter + 1) * dp.x) < screenDimension.x - boxDimension.x && 
-			p.y + (2 * (counter + 1) * dp.y) > 0 && 
-			p.y + (2 * (counter + 1) * dp.y) < screenDimension.y - boxDimension.y){
-			counter++;	
-		}
-		else
-			if(nframes > 100 && counter >= 0)
-				counter--;
+		// if(nframes <= 100 && p.x + (2 * (counter + 1) * dp.x) > 0 && 
+		// 	p.x + (2 * (counter + 1) * dp.x) < screenDimension.x - boxDimension.x && 
+		// 	p.y + (2 * (counter + 1) * dp.y) > 0 && 
+		// 	p.y + (2 * (counter + 1) * dp.y) < screenDimension.y - boxDimension.y){
+		// 	counter++;	
+		// }
+		// else
+		// 	if(nframes > 100 && counter >= 0)
+		// 		counter--;
 
 		nframes++;
 		cout<<"OBJECT LOST!"<<endl;
