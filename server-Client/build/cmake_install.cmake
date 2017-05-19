@@ -1,4 +1,4 @@
-# Install script for directory: /home/indresh/Downloads/udp-image-streaming-master
+# Install script for directory: /home/indresh/Karna/server-Client
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/indresh/Downloads/udp-image-streaming-master/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/indresh/Karna/server-Client/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

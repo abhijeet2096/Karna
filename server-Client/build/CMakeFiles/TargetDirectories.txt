@@ -1,4 +1,6 @@
-/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/rebuild_cache.dir
-/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/edit_cache.dir
-/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/client.dir
-/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/server.dir
+/home/indresh/Karna/server-Client/build/CMakeFiles/rebuild_cache.dir
+/home/indresh/Karna/server-Client/build/CMakeFiles/server_s.dir
+/home/indresh/Karna/server-Client/build/CMakeFiles/client_s.dir
+/home/indresh/Karna/server-Client/build/CMakeFiles/server_d.dir
+/home/indresh/Karna/server-Client/build/CMakeFiles/edit_cache.dir
+/home/indresh/Karna/server-Client/build/CMakeFiles/client_d.dir

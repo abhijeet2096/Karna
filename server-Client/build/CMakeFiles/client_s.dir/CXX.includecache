@@ -6,9 +6,21 @@
 
 #IncludeRegexTransform: 
 
-/home/indresh/Downloads/udp-image-streaming-master/PracticalSocket.cpp
+/home/indresh/Karna/server-Client/Client_s.cpp
 PracticalSocket.h
-/home/indresh/Downloads/udp-image-streaming-master/PracticalSocket.h
+/home/indresh/Karna/server-Client/PracticalSocket.h
+iostream
+-
+cstdlib
+-
+opencv2/opencv.hpp
+/home/indresh/Karna/server-Client/opencv2/opencv.hpp
+config.h
+/home/indresh/Karna/server-Client/config.h
+
+/home/indresh/Karna/server-Client/PracticalSocket.cpp
+PracticalSocket.h
+/home/indresh/Karna/server-Client/PracticalSocket.h
 winsock.h
 -
 sys/types.h
@@ -28,7 +40,7 @@ errno.h
 string.h
 -
 
-/home/indresh/Downloads/udp-image-streaming-master/PracticalSocket.h
+/home/indresh/Karna/server-Client/PracticalSocket.h
 cstdlib
 -
 exception
@@ -36,19 +48,7 @@ exception
 string
 -
 
-/home/indresh/Downloads/udp-image-streaming-master/Server.cpp
-PracticalSocket.h
-/home/indresh/Downloads/udp-image-streaming-master/PracticalSocket.h
-iostream
--
-cstdlib
--
-opencv2/opencv.hpp
-/home/indresh/Downloads/udp-image-streaming-master/opencv2/opencv.hpp
-config.h
-/home/indresh/Downloads/udp-image-streaming-master/config.h
-
-/home/indresh/Downloads/udp-image-streaming-master/config.h
+/home/indresh/Karna/server-Client/config.h
 
 /usr/local/include/opencv2/calib3d/calib3d.hpp
 opencv2/core/core.hpp

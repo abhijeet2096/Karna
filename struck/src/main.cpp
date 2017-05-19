@@ -52,18 +52,36 @@ using namespace std;
 using namespace cv;
 using namespace Eigen;
 
+string clientAddress;
+string clientPort;
+unsigned short serverPort;
 
+void sendCommand(string cmd){
+
+	char buffer[10];
+    unsigned short Port = Socket::resolveService(clientPort, "udp");
+
+    try {
+        UDPSocket sock;
+       
+        for(int i = 0; i < 10; i++)
+            buffer[i] = cmd[i];
+
+        sock.sendTo( &buffer[0], 10, clientAddress, Port);
+
+    } catch (SocketException & e) {
+        cerr << e.what() << endl;
+    }
+}
 
 Mat takeFrame(){
-	c:
 
-	unsigned short servPort = 5003;
 	char buffer[BUF_LEN]; // Buffer for echo string
 	int recvMsgSize; // Size of received message
 	string sourceAddress; // Address of datagram source
 	unsigned short sourcePort; // Port of datagram source
 	  
-	UDPSocket sock(servPort);
+	UDPSocket sock(serverPort);
 	clock_t last_cycle = clock(); 
 			
 	try{
@@ -92,14 +110,13 @@ Mat takeFrame(){
 	   
 	    if(!frame.data)
 	    {
-	    	goto c;
+	    	throw "Data may be corrupted";
 	    }
 	    if (frame.size().width == 0) {
 	    
-	      	goto c;
+	      	throw "Corrupted Image";
 	    }
 	    free(longbuf);
-		waitKey(1);
 		clock_t next_cycle = clock();
 		double duration = (next_cycle - last_cycle) / (double) CLOCKS_PER_SEC;
 		last_cycle = next_cycle;
@@ -107,7 +124,7 @@ Mat takeFrame(){
 	    return frame;  
 	}
 	catch (SocketException & e) {
-     	goto c;
+     	throw "Socket Exception";
     }
 }
 
@@ -121,27 +138,27 @@ void moveQuadcopter(const FloatRect& bb, int width, int height){
 	 (bb.XMin() > centerX - range) && 
 	 (bb.YMin() > centerY - range) && 
 	 (bb.YMax() < centerY + range)){
-		cout<<"Hover"<<endl;
+		sendCommand("Hover");
 	}
 	
 	if((bb.XMax() > centerX + range) ||
 	 (bb.XMin() < centerX - range)){
 		
 		if(bb.XMax() > centerX + range){
-			cout<<"rotate Left"<<endl;
+			sendCommand("rotate Left");
 		}
 		else{
-			cout<<"rotate Right"<<endl;
+			sendCommand("rotate Right");
 		}
 	}
 
 	if((bb.YMin() < centerY - range) || 
 	 (bb.YMax() > centerY + range)){
 		if(bb.YMin() < centerY - range){
-			cout<<"move Forward"<<endl;
+			sendCommand("move Forward");
 		}
 		else{
-			cout<<"move Backward"<<endl;	
+			sendCommand("move Backward");	
 		}
 	}
 }
@@ -154,13 +171,18 @@ void rectangle(Mat& rMat, const FloatRect& rRect, const Scalar& rColour)
 
 int main(int argc, char* argv[])
 {
-	// read config file
-	string configPath = "config.txt";
-	if (argc > 1)
-	{
-		configPath = argv[1];
+	if(argc > 3){
+
+		clientAddress = argv[1];
+		clientPort = argv[2];
+		serverPort = atoi(argv[3]);
 	}
-	Config conf(configPath);
+	else{
+		cout<<"*** <client Address><client Port><server port>"<<endl;
+		exit(1);
+	}
+
+	Config conf("config.txt");
 	cout << conf << endl;
 	
 	if (conf.features.size() == 0)
@@ -200,7 +222,12 @@ int main(int argc, char* argv[])
 	startFrame = 0;
 	endFrame = INT_MAX;
 	Mat tmp;
-	tmp = takeFrame();
+	try{
+		tmp = takeFrame();
+	}
+	catch(const char* err){
+		
+	}
 	scaleW = (float)conf.frameWidth/tmp.cols;
 	scaleH = (float)conf.frameHeight/tmp.rows;
 
@@ -233,7 +260,12 @@ int main(int argc, char* argv[])
 		Mat frame;
 		
 		Mat frameOrig;
-		frameOrig = takeFrame();
+		try{
+			frameOrig = takeFrame();
+		}
+		catch(const char* err){
+			continue;
+		}
 		resize(frameOrig, frame, Size(conf.frameWidth, conf.frameHeight));
 		//flip(frame, frame, 1);
 		frame.copyTo(result);
@@ -256,7 +288,7 @@ int main(int argc, char* argv[])
 			if(tracker.isDetected())
 				moveQuadcopter(tracker.GetBB(), conf.liveBoxWidth, conf.liveBoxHeight);
 			else{
-				cout<<"Hover"<<endl;
+				sendCommand("Hover");
 			}
 			
 			if (outFile)

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/indresh/Downloads/udp-image-streaming-master
+CMAKE_SOURCE_DIR = /home/indresh/Karna/server-Client
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/indresh/Downloads/udp-image-streaming-master/build
+CMAKE_BINARY_DIR = /home/indresh/Karna/server-Client/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles /home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/indresh/Karna/server-Client/build/CMakeFiles /home/indresh/Karna/server-Client/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/indresh/Karna/server-Client/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,57 +111,110 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named client
+# Target rules for targets named server_s
 
 # Build rule for target.
-client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 client
-.PHONY : client
+server_s: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_s
+.PHONY : server_s
 
 # fast build rule for target.
-client/fast:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
-.PHONY : client/fast
+server_s/fast:
+	$(MAKE) -f CMakeFiles/server_s.dir/build.make CMakeFiles/server_s.dir/build
+.PHONY : server_s/fast
 
 #=============================================================================
-# Target rules for targets named server
+# Target rules for targets named client_s
 
 # Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server
-.PHONY : server
+client_s: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client_s
+.PHONY : client_s
 
 # fast build rule for target.
-server/fast:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
-.PHONY : server/fast
+client_s/fast:
+	$(MAKE) -f CMakeFiles/client_s.dir/build.make CMakeFiles/client_s.dir/build
+.PHONY : client_s/fast
 
-Client.o: Client.cpp.o
+#=============================================================================
+# Target rules for targets named server_d
 
-.PHONY : Client.o
+# Build rule for target.
+server_d: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server_d
+.PHONY : server_d
+
+# fast build rule for target.
+server_d/fast:
+	$(MAKE) -f CMakeFiles/server_d.dir/build.make CMakeFiles/server_d.dir/build
+.PHONY : server_d/fast
+
+#=============================================================================
+# Target rules for targets named client_d
+
+# Build rule for target.
+client_d: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client_d
+.PHONY : client_d
+
+# fast build rule for target.
+client_d/fast:
+	$(MAKE) -f CMakeFiles/client_d.dir/build.make CMakeFiles/client_d.dir/build
+.PHONY : client_d/fast
+
+Client_d.o: Client_d.cpp.o
+
+.PHONY : Client_d.o
 
 # target to build an object file
-Client.cpp.o:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Client.cpp.o
-.PHONY : Client.cpp.o
+Client_d.cpp.o:
+	$(MAKE) -f CMakeFiles/client_d.dir/build.make CMakeFiles/client_d.dir/Client_d.cpp.o
+.PHONY : Client_d.cpp.o
 
-Client.i: Client.cpp.i
+Client_d.i: Client_d.cpp.i
 
-.PHONY : Client.i
+.PHONY : Client_d.i
 
 # target to preprocess a source file
-Client.cpp.i:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Client.cpp.i
-.PHONY : Client.cpp.i
+Client_d.cpp.i:
+	$(MAKE) -f CMakeFiles/client_d.dir/build.make CMakeFiles/client_d.dir/Client_d.cpp.i
+.PHONY : Client_d.cpp.i
 
-Client.s: Client.cpp.s
+Client_d.s: Client_d.cpp.s
 
-.PHONY : Client.s
+.PHONY : Client_d.s
 
 # target to generate assembly for a file
-Client.cpp.s:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Client.cpp.s
-.PHONY : Client.cpp.s
+Client_d.cpp.s:
+	$(MAKE) -f CMakeFiles/client_d.dir/build.make CMakeFiles/client_d.dir/Client_d.cpp.s
+.PHONY : Client_d.cpp.s
+
+Client_s.o: Client_s.cpp.o
+
+.PHONY : Client_s.o
+
+# target to build an object file
+Client_s.cpp.o:
+	$(MAKE) -f CMakeFiles/client_s.dir/build.make CMakeFiles/client_s.dir/Client_s.cpp.o
+.PHONY : Client_s.cpp.o
+
+Client_s.i: Client_s.cpp.i
+
+.PHONY : Client_s.i
+
+# target to preprocess a source file
+Client_s.cpp.i:
+	$(MAKE) -f CMakeFiles/client_s.dir/build.make CMakeFiles/client_s.dir/Client_s.cpp.i
+.PHONY : Client_s.cpp.i
+
+Client_s.s: Client_s.cpp.s
+
+.PHONY : Client_s.s
+
+# target to generate assembly for a file
+Client_s.cpp.s:
+	$(MAKE) -f CMakeFiles/client_s.dir/build.make CMakeFiles/client_s.dir/Client_s.cpp.s
+.PHONY : Client_s.cpp.s
 
 PracticalSocket.o: PracticalSocket.cpp.o
 
@@ -169,8 +222,10 @@ PracticalSocket.o: PracticalSocket.cpp.o
 
 # target to build an object file
 PracticalSocket.cpp.o:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/PracticalSocket.cpp.o
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/PracticalSocket.cpp.o
+	$(MAKE) -f CMakeFiles/server_s.dir/build.make CMakeFiles/server_s.dir/PracticalSocket.cpp.o
+	$(MAKE) -f CMakeFiles/client_s.dir/build.make CMakeFiles/client_s.dir/PracticalSocket.cpp.o
+	$(MAKE) -f CMakeFiles/server_d.dir/build.make CMakeFiles/server_d.dir/PracticalSocket.cpp.o
+	$(MAKE) -f CMakeFiles/client_d.dir/build.make CMakeFiles/client_d.dir/PracticalSocket.cpp.o
 .PHONY : PracticalSocket.cpp.o
 
 PracticalSocket.i: PracticalSocket.cpp.i
@@ -179,8 +234,10 @@ PracticalSocket.i: PracticalSocket.cpp.i
 
 # target to preprocess a source file
 PracticalSocket.cpp.i:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/PracticalSocket.cpp.i
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/PracticalSocket.cpp.i
+	$(MAKE) -f CMakeFiles/server_s.dir/build.make CMakeFiles/server_s.dir/PracticalSocket.cpp.i
+	$(MAKE) -f CMakeFiles/client_s.dir/build.make CMakeFiles/client_s.dir/PracticalSocket.cpp.i
+	$(MAKE) -f CMakeFiles/server_d.dir/build.make CMakeFiles/server_d.dir/PracticalSocket.cpp.i
+	$(MAKE) -f CMakeFiles/client_d.dir/build.make CMakeFiles/client_d.dir/PracticalSocket.cpp.i
 .PHONY : PracticalSocket.cpp.i
 
 PracticalSocket.s: PracticalSocket.cpp.s
@@ -189,36 +246,65 @@ PracticalSocket.s: PracticalSocket.cpp.s
 
 # target to generate assembly for a file
 PracticalSocket.cpp.s:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/PracticalSocket.cpp.s
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/PracticalSocket.cpp.s
+	$(MAKE) -f CMakeFiles/server_s.dir/build.make CMakeFiles/server_s.dir/PracticalSocket.cpp.s
+	$(MAKE) -f CMakeFiles/client_s.dir/build.make CMakeFiles/client_s.dir/PracticalSocket.cpp.s
+	$(MAKE) -f CMakeFiles/server_d.dir/build.make CMakeFiles/server_d.dir/PracticalSocket.cpp.s
+	$(MAKE) -f CMakeFiles/client_d.dir/build.make CMakeFiles/client_d.dir/PracticalSocket.cpp.s
 .PHONY : PracticalSocket.cpp.s
 
-Server.o: Server.cpp.o
+Server_d.o: Server_d.cpp.o
 
-.PHONY : Server.o
+.PHONY : Server_d.o
 
 # target to build an object file
-Server.cpp.o:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Server.cpp.o
-.PHONY : Server.cpp.o
+Server_d.cpp.o:
+	$(MAKE) -f CMakeFiles/server_d.dir/build.make CMakeFiles/server_d.dir/Server_d.cpp.o
+.PHONY : Server_d.cpp.o
 
-Server.i: Server.cpp.i
+Server_d.i: Server_d.cpp.i
 
-.PHONY : Server.i
+.PHONY : Server_d.i
 
 # target to preprocess a source file
-Server.cpp.i:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Server.cpp.i
-.PHONY : Server.cpp.i
+Server_d.cpp.i:
+	$(MAKE) -f CMakeFiles/server_d.dir/build.make CMakeFiles/server_d.dir/Server_d.cpp.i
+.PHONY : Server_d.cpp.i
 
-Server.s: Server.cpp.s
+Server_d.s: Server_d.cpp.s
 
-.PHONY : Server.s
+.PHONY : Server_d.s
 
 # target to generate assembly for a file
-Server.cpp.s:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Server.cpp.s
-.PHONY : Server.cpp.s
+Server_d.cpp.s:
+	$(MAKE) -f CMakeFiles/server_d.dir/build.make CMakeFiles/server_d.dir/Server_d.cpp.s
+.PHONY : Server_d.cpp.s
+
+Server_s.o: Server_s.cpp.o
+
+.PHONY : Server_s.o
+
+# target to build an object file
+Server_s.cpp.o:
+	$(MAKE) -f CMakeFiles/server_s.dir/build.make CMakeFiles/server_s.dir/Server_s.cpp.o
+.PHONY : Server_s.cpp.o
+
+Server_s.i: Server_s.cpp.i
+
+.PHONY : Server_s.i
+
+# target to preprocess a source file
+Server_s.cpp.i:
+	$(MAKE) -f CMakeFiles/server_s.dir/build.make CMakeFiles/server_s.dir/Server_s.cpp.i
+.PHONY : Server_s.cpp.i
+
+Server_s.s: Server_s.cpp.s
+
+.PHONY : Server_s.s
+
+# target to generate assembly for a file
+Server_s.cpp.s:
+	$(MAKE) -f CMakeFiles/server_s.dir/build.make CMakeFiles/server_s.dir/Server_s.cpp.s
+.PHONY : Server_s.cpp.s
 
 # Help Target
 help:
@@ -227,18 +313,26 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... server_s"
+	@echo "... client_s"
+	@echo "... server_d"
 	@echo "... edit_cache"
-	@echo "... client"
-	@echo "... server"
-	@echo "... Client.o"
-	@echo "... Client.i"
-	@echo "... Client.s"
+	@echo "... client_d"
+	@echo "... Client_d.o"
+	@echo "... Client_d.i"
+	@echo "... Client_d.s"
+	@echo "... Client_s.o"
+	@echo "... Client_s.i"
+	@echo "... Client_s.s"
 	@echo "... PracticalSocket.o"
 	@echo "... PracticalSocket.i"
 	@echo "... PracticalSocket.s"
-	@echo "... Server.o"
-	@echo "... Server.i"
-	@echo "... Server.s"
+	@echo "... Server_d.o"
+	@echo "... Server_d.i"
+	@echo "... Server_d.s"
+	@echo "... Server_s.o"
+	@echo "... Server_s.i"
+	@echo "... Server_s.s"
 .PHONY : help
 
 

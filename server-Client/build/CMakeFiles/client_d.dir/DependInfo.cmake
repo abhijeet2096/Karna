@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/indresh/Downloads/udp-image-streaming-master/PracticalSocket.cpp" "/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/server.dir/PracticalSocket.cpp.o"
-  "/home/indresh/Downloads/udp-image-streaming-master/Server.cpp" "/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/server.dir/Server.cpp.o"
+  "/home/indresh/Karna/server-Client/Client_d.cpp" "/home/indresh/Karna/server-Client/build/CMakeFiles/client_d.dir/Client_d.cpp.o"
+  "/home/indresh/Karna/server-Client/PracticalSocket.cpp" "/home/indresh/Karna/server-Client/build/CMakeFiles/client_d.dir/PracticalSocket.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
