@@ -25,6 +25,8 @@
  * 
  */
  
+
+
 #include "Tracker.h"
 #include "Config.h"
 
@@ -33,12 +35,81 @@
 #include <fstream>
 
 #include <opencv/cv.h>
+
+#include "PracticalSocket.h" // For UDPSocket and SocketException
+#include <cstdlib>           // For atoi()
+#define BUF_LEN 65540 // Larger than maximum UDP packet size
+#define FRAME_HEIGHT 720
+#define FRAME_WIDTH 1280
+#define FRAME_INTERVAL (1000/30)
+#define PACK_SIZE 4096 //udp pack size; note that OSX limits < 8100 bytes
+#define ENCODE_QUALITY 80
+
 #include <Eigen/Core>
 #include <opencv/highgui.h>
 
 using namespace std;
 using namespace cv;
 using namespace Eigen;
+
+
+
+Mat takeFrame(){
+	c:
+
+	unsigned short servPort = 5003;
+	char buffer[BUF_LEN]; // Buffer for echo string
+	int recvMsgSize; // Size of received message
+	string sourceAddress; // Address of datagram source
+	unsigned short sourcePort; // Port of datagram source
+	  
+	UDPSocket sock(servPort);
+	clock_t last_cycle = clock(); 
+			
+	try{
+ 		
+		do{
+		    recvMsgSize = sock.recvFrom(buffer, BUF_LEN, sourceAddress, sourcePort);
+		} while (recvMsgSize > sizeof(int));
+		        
+		int total_pack = ((int * ) buffer)[0];
+
+	    char * longbuf = new char[PACK_SIZE * total_pack];
+	    for (int i = 0; i < total_pack; i++) {
+	    
+	    	recvMsgSize = sock.recvFrom(buffer, BUF_LEN, sourceAddress, sourcePort);
+		    if (recvMsgSize != PACK_SIZE) 
+		    {
+		        continue;
+		    }
+		   
+		    memcpy( & longbuf[i * PACK_SIZE], buffer, PACK_SIZE);
+	    }
+
+	    Mat rawData = Mat(1, PACK_SIZE * total_pack, CV_8UC1, longbuf);
+	    
+	    Mat frame = imdecode(rawData, CV_LOAD_IMAGE_COLOR);
+	   
+	    if(!frame.data)
+	    {
+	    	goto c;
+	    }
+	    if (frame.size().width == 0) {
+	    
+	      	goto c;
+	    }
+	    free(longbuf);
+		waitKey(1);
+		clock_t next_cycle = clock();
+		double duration = (next_cycle - last_cycle) / (double) CLOCKS_PER_SEC;
+		last_cycle = next_cycle;
+
+	    return frame;  
+	}
+	catch (SocketException & e) {
+     	goto c;
+    }
+}
 
 int centerX, centerY;
 
@@ -121,15 +192,15 @@ int main(int argc, char* argv[])
 	float scaleW = 1.f;
 	float scaleH = 1.f;
 	
-	if (!cap.open("http://192.168.0.103:8081"))
-	{
-		cout << "error: could not start camera capture" << endl;
-		return EXIT_FAILURE;
-	}
+	// if (!cap.open())
+	// {
+	// 	cout << "error: could not start camera capture" << endl;
+	// 	return EXIT_FAILURE;
+	// }
 	startFrame = 0;
 	endFrame = INT_MAX;
 	Mat tmp;
-	cap >> tmp;
+	tmp = takeFrame();
 	scaleW = (float)conf.frameWidth/tmp.cols;
 	scaleH = (float)conf.frameHeight/tmp.rows;
 
@@ -162,7 +233,7 @@ int main(int argc, char* argv[])
 		Mat frame;
 		
 		Mat frameOrig;
-		cap >> frameOrig;
+		frameOrig = takeFrame();
 		resize(frameOrig, frame, Size(conf.frameWidth, conf.frameHeight));
 		//flip(frame, frame, 1);
 		frame.copyTo(result);

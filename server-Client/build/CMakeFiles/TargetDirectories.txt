@@ -1,0 +1,4 @@
+/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/rebuild_cache.dir
+/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/edit_cache.dir
+/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/client.dir
+/home/indresh/Downloads/udp-image-streaming-master/build/CMakeFiles/server.dir
