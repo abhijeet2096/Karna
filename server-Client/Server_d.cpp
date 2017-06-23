@@ -36,7 +36,7 @@ int main(int argc, char * argv[]) {
     }
     
     string msg;
-    char buffer[10];
+    char buffer[100];
     string clientAddress = argv[1]; // First arg: server address
     unsigned short servPort = Socket::resolveService(argv[2], "udp");
 
@@ -48,10 +48,10 @@ int main(int argc, char * argv[]) {
             cout<<"Enter msg : ";
             getline(cin, msg);
 
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 100; i++)
                 buffer[i] = msg[i];
 
-            sock.sendTo( &buffer[0], 10, clientAddress, servPort);
+            sock.sendTo( &buffer[0], 100, clientAddress, servPort);
         }
         // Destructor closes the socket
 

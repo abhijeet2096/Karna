@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/motion.dir/motion.cpp.o CMakeFiles/motion.dir/PracticalSocket.cpp.o  -o motion -rdynamic 

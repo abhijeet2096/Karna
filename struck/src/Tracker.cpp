@@ -225,7 +225,7 @@ void Tracker::Track(const cv::Mat& frame, const Point& screenDimension, const Po
 		m_bb = tmp;
 	}
 
-	if ((bestScore > 0.6 || bestScore < 0.3) && bestScore > 0.2)
+	if ((bestScore > 0.6) && bestScore > 0.2)
 	{ 
 		UpdateLearner(image);
 	}

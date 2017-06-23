@@ -24,10 +24,6 @@
 
 #define BUF_LEN 65540 // Larger than maximum UDP packet size
 
-#include "opencv2/opencv.hpp"
-
-using namespace cv;
-
 using namespace std;
 
 int main(int argc, char * argv[]) {

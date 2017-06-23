@@ -1,0 +1,3 @@
+/home/indresh/Karna/Quadcopter/build/CMakeFiles/edit_cache.dir
+/home/indresh/Karna/Quadcopter/build/CMakeFiles/rebuild_cache.dir
+/home/indresh/Karna/Quadcopter/build/CMakeFiles/motion.dir

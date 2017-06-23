@@ -39,11 +39,11 @@
 #include "PracticalSocket.h" // For UDPSocket and SocketException
 #include <cstdlib>           // For atoi()
 #define BUF_LEN 65540 // Larger than maximum UDP packet size
-#define FRAME_HEIGHT 720
-#define FRAME_WIDTH 1280
-#define FRAME_INTERVAL (1000/30)
-#define PACK_SIZE 4096 //udp pack size; note that OSX limits < 8100 bytes
-#define ENCODE_QUALITY 80
+#define FRAME_HEIGHT 640
+#define FRAME_WIDTH 800
+#define FRAME_INTERVAL (1000/1000)
+#define PACK_SIZE 2048 //udp pack size; note that OSX limits < 8100 bytes
+#define ENCODE_QUALITY 50
 
 #include <Eigen/Core>
 #include <opencv/highgui.h>
@@ -58,16 +58,16 @@ unsigned short serverPort;
 
 void sendCommand(string cmd){
 
-	char buffer[10];
+	char buffer[100];
     unsigned short Port = Socket::resolveService(clientPort, "udp");
 
     try {
         UDPSocket sock;
        
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 100; i++)
             buffer[i] = cmd[i];
 
-        sock.sendTo( &buffer[0], 10, clientAddress, Port);
+        sock.sendTo( &buffer[0], 100, clientAddress, Port);
 
     } catch (SocketException & e) {
         cerr << e.what() << endl;
@@ -145,20 +145,20 @@ void moveQuadcopter(const FloatRect& bb, int width, int height){
 	 (bb.XMin() < centerX - range)){
 		
 		if(bb.XMax() > centerX + range){
-			sendCommand("rotate Left");
+			sendCommand("rotate Right");
 		}
 		else{
-			sendCommand("rotate Right");
+			sendCommand("rotate Left");
 		}
 	}
 
 	if((bb.YMin() < centerY - range) || 
 	 (bb.YMax() > centerY + range)){
 		if(bb.YMin() < centerY - range){
-			sendCommand("move Forward");
+			sendCommand("move Backward");
 		}
 		else{
-			sendCommand("move Backward");	
+			sendCommand("move Forward");	
 		}
 	}
 }
@@ -228,6 +228,8 @@ int main(int argc, char* argv[])
 	catch(const char* err){
 		
 	}
+
+	flip(tmp, tmp, 0);
 	scaleW = (float)conf.frameWidth/tmp.cols;
 	scaleH = (float)conf.frameHeight/tmp.rows;
 
@@ -267,7 +269,7 @@ int main(int argc, char* argv[])
 			continue;
 		}
 		resize(frameOrig, frame, Size(conf.frameWidth, conf.frameHeight));
-		//flip(frame, frame, 1);
+		//flip(frame, frame, 0);
 		frame.copyTo(result);
 		if (doInitialise){
 
